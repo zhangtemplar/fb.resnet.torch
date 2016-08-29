@@ -49,6 +49,9 @@ function ImagenetDataset:_loadImage(path)
       assert(f, 'Error reading: ' .. tostring(path))
       local data = f:read('*a')
       f:close()
+      if data == nil then
+         error('Error reading: ' .. tostring(path))
+      end
 
       local b = torch.ByteTensor(string.len(data))
       ffi.copy(b:data(), data, b:size(1))
